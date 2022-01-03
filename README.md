@@ -118,7 +118,7 @@ python3 src/readmission_prediction.py
 ```
 This outputs a .csv file containing predicted labels for the test set and print an evaluation table containing model performance metrics in the terminal. This shows the overall performance of the logistic regression classifier for prediction 30-day unplanned readmission. 
 <br> 
-Now, sentiment scores can be calculated for all notes in the test data by running the *sentiment_analysis.py* file. Toexamine which arguments the script takes, run
+Now, sentiment scores can be calculated for all notes in the test data by running the *sentiment_analysis.py* file. To examine which arguments the script takes, run
 
 ```bash
 # Add -h to view how which arguments should be passed  
@@ -144,8 +144,10 @@ optional arguments:
                     [DEFAULT]     15 
                     [EXAMPLE]     -ol 15 
 ```
-
-Sentiment analysis can now be performed using the following command:
+<br> 
+Sentiment scores are calculated using the *nlptown/bert-base-multilingual-uncased-sentiment* model avalable for Hugging Face: https://huggingface.co/nlptown/bert-base-multilingual-uncased-sentiment 
+<br> 
+The script can now be performed using the following command:
 
 ```bash
 
