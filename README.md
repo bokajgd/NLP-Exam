@@ -1,10 +1,16 @@
-# Investigating Gender Bias in Clinical Discharge Notes
-## NLP Exam - Masters in Cogntive Science, Aarhus Universitet
+  <h3 align="center">Investigating Gender Bias in Clinical Discharge Notes</h3>
+
+  <p align="center">
+    Exam Project for NLP - Cognitive Science, AU
+    <br />
 
 **Jakob Grøhn Damgaard, January 2022** <br/>
 This repository contains code for my project in the course *Natural Language Processing*
+<br>
+## Overview
+[Scope](#scope) | [Data](#data) | [Usage](#usage) | [Structure](#Structure) | [Contact](#contact)
 
-## Overview of scope
+## Scope
 With this project, I aim to investigate the potential presence of human-induced systematic biases in free-text clinical notes and assess the unsought impacts such biases may transmit to predictive models for clinical outcomes. More specifically, I wish to employ sentiment analysis to unravel linguistic differences in narrative discharge notes across genders. To gauge the impact of a potential difference herein, I subsequently examine the association 
 between sentiment scores and risk of unplanned readmission. Lastly, I check for differences in sentiment scores across patients that are falsely predicted to not be readmitted within 30 days of discharge (false negatives) and patients that are correctly predicted to be readmitted (true positives) by a predictive model trained on discharge notes. Given the shortage of reliable research on this specific topic, this project should best be regarded as exploratory. Hence, I will purposefully not formulate concrete a priori hypotheses or expectations that may prejudice my discussion but instead let the data analyses speak for themselves. <br> 
 
