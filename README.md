@@ -4,7 +4,7 @@
     Exam Project for NLP - Cognitive Science, AU
     <br />
   <p align="center">
-    **Jakob Grøhn Damgaard, January 2022** <br/>
+    Jakob Grøhn Damgaard, January 2022 <br/>
 
 ## Overview
 [Scope](#scope) | [Data](#data) | [Usage](#usage) | [Structure](#Structure) | [Contact](#contact)
