@@ -3,9 +3,9 @@
   <p align="center">
     Exam Project for NLP - Cognitive Science, AU
     <br />
-
-**Jakob Grøhn Damgaard, January 2022** <br/>
-This repository contains code for my project in the course *Natural Language Processing*
+  <p align="center">
+    **Jakob Grøhn Damgaard, January 2022** <br/>
+<br>
 <br>
 ## Overview
 [Scope](#scope) | [Data](#data) | [Usage](#usage) | [Structure](#Structure) | [Contact](#contact)
