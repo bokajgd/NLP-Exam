@@ -24,9 +24,13 @@ https://mimic.mit.edu/iii/gettingstarted/
 **If one has access to the correct data in the data folder, executing the files could be carried out like this:**
 <br>
 <br>
-This section provides a detailed guide for locally downloading the code from GitHub, initialising a virtual Python environment, and installing the necessary requirements Please note, a local installation of Python 3.8.5 or higher is necessary to run the scripts.
+This section provides a detailed guide for locally downloading the code from GitHub, initialising a virtual Python environment, and installing the necessary requirements Please note, a local installation of Python 3.8.5 or higher and R 4.0.2 is necessary to run the scripts.
 To locally download the code, please open a terminal window, redirect the directory to the desired location on your machine and clone the repository using the following command:
-git clone https://github.com/bokajgd/Language-Analytics-Exam <br>
+
+ ```bash
+git clone https://github.com/bokajgd/Language-Analytics-Exam
+ ```
+ <br>
 Redirect to the directory to which you cloned the repository and then proceed to execute the Bash script provided in the repository for initialising a suitable virtual environment: <br>
 
  ```bash
@@ -40,11 +44,12 @@ Firstly, one should run the following command to get an understanding of how the
 ```bash
 # Add -h to view how which arguments should be passed  
 python3 src/data_preprocessing.py -h    
-usage: data_preprocessing.py [-h] [-nf --notes_file] [-af --admissions_file] [-mf --max_features] [-ng --ngram_range]
+usage: data_preprocessing.py [-h] [-nf --notes_file] [-af --admission_file]
+                             [-mf --max_features] [-ng --ngram_range]
 
 [INFO] Pre-processing discharge summaries
 
-optional arguments:s
+optional arguments:
   -h, --help            show this help message and exit
   -nf --notes_file      [DESCRIPTION] The path for the file containing clinical notes. 
                         [TYPE]        str 
@@ -61,7 +66,7 @@ optional arguments:s
   -ng --ngram_range     [DESCRIPTION] Defines the range of ngrams to include (either 2 or 3) 
                         [TYPE]        int 
                         [DEFAULT]     3 
-                        [EXAMPLE]     -ng 3
+                        [EXAMPLE]     -ng 3 
 
 ```
 <br>
@@ -75,13 +80,13 @@ python3 src/data_preprocessing.py
 
 This script pre.processes the data and outputs both full data frames for the training and test partion and  TF_IDF vectorised training and test data along with classification labels (vector of 0 or 1s) and the vocabulary obtained when fitting the vectorised.  <br>
 <br>
-This data allows one to run the *readmission_prediction.py* which uses the latter of the output files from the previous script to train and test a logistic regression classifier. First, let us examine which arguments the script takes: 
+This the latter of the output files from the previous script allows one to run the *readmission_prediction.py* which trains and tests a logistic regression classifier. First, let us examine which arguments the script takes: 
 
 ```bash
 # Add -h to view how which arguments should be passed  
 python3 src/readmission_prediction.py -h
 usage: readmission_prediction.py [-h] [-tr --train_data] [-te --test_data]
-                                 [-trl --train_labels] [--tel --test_labels]
+                                 [-trl --train_labels] [-tel --test_labels]
 
 [INFO] Readmission Prediction
 
@@ -99,11 +104,11 @@ optional arguments:
                        [TYPE]        str 
                        [DEFAULT]     train_labels.csv 
                        [EXAMPLE]     -tr train_labels.csv 
-  --tel --test_labels  [DESCRIPTION] The file name of the test labels csv
+  -tel --test_labels   [DESCRIPTION] The file name of the test labels csv
                        [TYPE]        str 
                        [DEFAULT]     test_labels.csv 
                        [EXAMPLE]     -tr test_labels.csv 
-
+                       
 ```
 Readmission prediction can now be performed using the following command:
 
@@ -112,10 +117,12 @@ Readmission prediction can now be performed using the following command:
 python3 src/readmission_prediction.py
 
 ```
-As the *NOTEEVENTS.csv* data file loaded in to the first script exceeds 4GB in storage, the script take around 15 minutes to execute on my MacBook.
+This outputs a .csv file containing predicted labels for the test set and print an evaluation table containing model performance metrics in the terminal. This shows the overall perfromance of the logistic regression classifier for prediction 30-day unplanned readmissions. 
+<br> 
+Upon obtaining the true performance 
 
 ## Structure
-The structure of the assignment folder can be viewed using the following command:
+The structure of the downloaded folder (given data is there) can be viewed using the following command:
 
 ```bash
 tree -L 2
@@ -126,24 +133,40 @@ This should yield the following graph:
 ```bash
 .
 ├── README.md
+├── create_venv.sh
 ├── data
 │   ├── ADMISSIONS.csv
-│   └── NOTEEVENTS.csv
+│   ├── NOTEEVENTS.csv
+│   └── PATIENTS.csv
 ├── output
+│   ├── balanced_test_data.csv
+│   ├── balanced_test_data_sentiment_scores.csv
+│   ├── balanced_test_labels.csv
+│   ├── balanced_tfidf_test_notes.csv
+│   ├── lr_predictions_balanced.csv
+│   ├── lr_predictions_test_data.csv
+│   ├── test_data.csv
 │   ├── test_labels.csv
 │   ├── tfidf_test_notes.csv
-│   ├── tfidf_train_notes.csv
+│  ├── tfidf_train_notes.csv
 │   ├── tfidf_valid_notes.csv
+│   ├── train_data.csv
 │   ├── train_labels.csv
 │   ├── valid_labels.csv
 │   └── vocab
+├── requirements.txt
 ├── src
 │   ├── data_preprocessing.py
-│   └── readmission_prediction.py
+│   ├── exploratory.ipynb
+│   ├── readmission_prediction.py
+│   ├── sentiment_scoring.py
+│   ├── subset_of_test_data.Rmd
+│   └── tests_and_plots.Rmd
 └── viz
     ├── ROC-AUC.png
-    ├── most_important.png
-    └── preprocessing.png
+    ├── lr_hyper_params_metrics.png
+    ├── model_results.png
+    └── sentiment_analysis.png
 
 ```
 
