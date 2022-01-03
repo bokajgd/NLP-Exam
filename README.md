@@ -5,8 +5,7 @@
     <br />
   <p align="center">
     **Jakob Grøhn Damgaard, January 2022** <br/>
-<br>
-<br>
+
 ## Overview
 [Scope](#scope) | [Data](#data) | [Usage](#usage) | [Structure](#Structure) | [Contact](#contact)
 
