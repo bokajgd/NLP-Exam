@@ -1,0 +1,146 @@
+---
+title: "Statistical Analysis NLP"
+author: "Jakob Grøhn Damgaard"
+date: "12/31/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(pacman, tidyverse, tidymodels, groupdata2, lmerTest, lme4, kernlab, ggplot2, dplyr, caret)
+```
+
+# Statistical Tests and Plots for NLP EXam
+This markdown file contains code for conducting all statistical tests and plots needed for my NLP exam on gender bias in Electronic Health Records. 
+
+## Loading data
+```{r loading data}
+# Loading  test data frame
+test_data <- read_csv("~/Desktop/Cognitive_Science/Cognitive Sceince 7th Semester/NLP/Exam/Exam/output/balanced_test_data.csv")
+
+# Loading prediction labels
+pred_labels <- read_csv("~/Desktop/Cognitive_Science/Cognitive Sceince 7th Semester/NLP/Exam/Exam/output/lr_predictions_balanced.csv")
+
+# Loading true labels
+true_labels <- read_csv("~/Desktop/Cognitive_Science/Cognitive Sceince 7th Semester/NLP/Exam/Exam/output/balanced_test_labels.csv")
+
+# Loading sentiment scores
+sent_scores <- read_csv("~/Desktop/Cognitive_Science/Cognitive Sceince 7th Semester/NLP/Exam/Exam/output/balanced_test_data_sentiment_scores.csv")
+```
+
+## Merging columns on to df
+```{r merging data}
+# Merging data
+test_data$true_labels = true_labels$OUTPUT_LABEL
+test_data$pred_labels = pred_labels[[2]]
+test_data$sent_scores = sent_scores[[2]]
+
+
+# Adding column showing prediction categories
+# Create empty column
+test_data[ , 'res'] <- NA
+
+# Find prediction result
+for(i in seq_len(nrow(test_data))){
+  if (test_data$true_labels[i] == 0 & test_data$pred_labels[i] == 0) {
+    test_data$res[i] = 'TN'
+  }
+  if (test_data$true_labels[i] == 1 & test_data$pred_labels[i] == 1) {
+    test_data$res[i] = 'TP'
+  }
+  if (test_data$true_labels[i] > test_data$pred_labels[i]) {
+    test_data$res[i] = 'FN'
+  }
+  if (test_data$true_labels[i] < test_data$pred_labels[i]) {
+    test_data$res[i] = 'FP'
+  }
+}
+```
+
+## Creating a subset containing only FN and TP cases
+```{r}
+fn_tp_cases <- test_data %>% filter(res == 'FN' | res == 'TP')
+```
+
+
+## Plotting sentiment differences across various condions
+```{r merging data}
+# Visualising results with violin plots 
+
+# Unlisting columns
+test_data$GENDER <- unlist(test_data$GENDER)
+test_data$sent_scores <- unlist(test_data$sent_scores)
+
+# Re-factoring results column
+test_data$res <- factor(test_data$res, levels = c("FN", "TP", "FP", "TN"))
+
+# Sentiment scores vs Gender
+ggplot(test_data, aes(x = GENDER, y=sent_scores, group = GENDER, fill = GENDER))+
+  geom_violin(alpha = 0.5)+
+  stat_summary(fun.y=mean, geom="line", aes(group=1), size = 1, alpha = 0.3)+
+  stat_summary(fun.y=mean, geom="point", size = 2.5,alpha = 0.3)+
+  geom_boxplot(width=0.2, alpha = 0.5)+ 
+  scale_fill_manual(values=c("#C2E180","#95BDE5", "#6F6F6F"))+
+  theme_classic()+
+  theme(legend.position = "none") +
+  labs(title = "Sentiment Scores by Gender", 
+       x = "Gender",
+       y = "Sentiment")
+
+
+# Sentiment scores vs prediction category
+ggplot(test_data, aes(x = res, y=sent_scores, group = res, fill = res))+
+  geom_violin(alpha = 0.5)+
+  stat_summary(fun.y=mean, geom="line", aes(group=1), size = 1, alpha = 0.3)+
+  stat_summary(fun.y=mean, geom="point", size = 2.5,alpha = 0.3)+
+  geom_boxplot(width=0.2, alpha = 0.5)+ 
+  scale_fill_manual(values=c("#C2E180","#849560","#95BDE5", "#3064A3", "#6F6F6F"))+
+  theme_classic()+
+  scale_x_discrete(labels=c("0" = "No readmission", "1" = "Readmission"))+
+  theme(legend.position = "none") +
+  labs(title = "Sentiment Scores by Prediction Type", 
+       x = "Prediciton",
+       y = "Sentiment")
+
+# Setting 'true_labels' column as factor
+test_data$true_labels <- as.factor(test_data$true_labels )
+
+# Sentiment scores vs true labels
+ggplot(test_data, aes(x = true_labels, y=sent_scores, group = true_labels, fill = true_labels))+
+  geom_violin(alpha = 0.5)+
+  stat_summary(fun.y=mean, geom="line", aes(group=1), size = 1, alpha = 0.3)+
+  stat_summary(fun.y=mean, geom="point", size = 2.5,alpha = 0.3)+
+  geom_boxplot(width=0.2, alpha = 0.5)+ 
+  scale_fill_manual(values=c("#C2E180","#95BDE5", "#6F6F6F"))+
+  scale_x_discrete(labels=c("0" = "No readmission", "1" = "Readmission"))+
+  theme_classic()+
+  theme(legend.position = "none") +
+  labs(title = "Sentiment Scores by Readmission", 
+       x = "True Label",
+       y = "Sentiment")
+
+```
+## Statistical tests
+```{r}
+# Linear mixed effects model to assess differences in sentiment scores between gender
+summary(lmer(sent_scores ~ 1 + GENDER + (1|SUBJECT_ID), data=test_data))
+
+# Linear mixed effects model to assess differences in sentiment scores between fn and tp cases
+summary(lmer(sent_scores ~ res + (1|SUBJECT_ID), data=fn_tp_cases))
+
+# General linear mixed effects model for assessing effect association between sentiment and readmission risk
+
+log_model <-glmer(true_labels~sent_scores+(1|SUBJECT_ID), test_data, family="binomial",
+             control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e5)),nAGQ = 10)
+
+summary(log_model)
+# An increase of 1 unit in sentiment scores (more positive sentiment) is associated with a 24% (e^0.216) increased chance of be readmitted within 30-days. Not significant at all
+
+# Calculating percentage of postive men/woman falsely classified
+tp <- fn_tp_cases[fn_tp_cases$res=='TP',]
+
+nrow(tp[tp$GENDER=='M',])/nrow(fn_tp_cases[fn_tp_cases$GENDER=='M',])*100
+nrow(tp[tp$GENDER=='F',])/nrow(fn_tp_cases[fn_tp_cases$GENDER=='F',])*100
+```
+
+

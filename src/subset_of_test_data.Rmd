@@ -1,0 +1,26 @@
+---
+title: "Subset of Test Data"
+author: "Jakob Grøhn Damgaard"
+date: "1/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# This purpose of this script is to generate and export a subset of the test_data frame that is class-balanced and suitable for sentiment analysis
+```{r}
+# Generating subset of test_data.csv for use in sentiment prediction and subsequent tests
+# Loading  test data frame
+test_data <- read_csv("~/Desktop/Cognitive_Science/Cognitive Sceince 7th Semester/NLP/Exam/Exam/output/test_data.csv")
+
+# Creating balanced data set containing all positive cases
+pos_cases <- new_test_data[new_test_data$OUTPUT_LABEL=='1',]
+neg_cases <- new_test_data[new_test_data$OUTPUT_LABEL=='0',]
+
+balanced_test_data <- rbind(pos_cases,neg_cases[1:589,])
+
+# Exporting csv
+write.csv(balanced_test_data, "~/Desktop/Cognitive_Science/Cognitive Sceince 7th Semester/NLP/Exam/Exam/output/balanced_test_data.csv", row.names = FALSE)
+```
