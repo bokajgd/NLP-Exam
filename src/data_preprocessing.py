@@ -115,8 +115,6 @@ class NotePreprocessing:
 
 
     #-#-# FUNCTION FOR PREPROCESSING ADMISSIONS DATA #-#-#
-    '''
-    '''
     def preprocess_admissions(self, admissions):
 
         # Convert time columns to datetime
@@ -169,8 +167,6 @@ class NotePreprocessing:
 
 
     #-#-# FUNCTION FOR PREPROCESSING NOTES #-#-#
-    '''
-    '''
     def preprocess_notes(self, notes):
 
         # Keeping only discharge summaries
@@ -218,8 +214,6 @@ class NotePreprocessing:
         return adm_discharge_sums_with_gender
 
     #-#-# SPLITTING DATA #-#-#
-    '''
-    '''
     def split_data(self, adm_discharge_sums, test_frac):
 
         # Shuffling the data randomly
@@ -237,8 +231,6 @@ class NotePreprocessing:
         return train, test
 
     #-#-# OVERSAMPLING POSITIVE INSTANCES TO CREATE BALANCED TRAINING DATASET #-#-#
-    '''
-    '''
     def oversample_positive_cases(self, train):
 
         # Splitting the training data into positive and negative cases
@@ -263,8 +255,6 @@ class NotePreprocessing:
 
 
     #-#-# CLEANING TEXT AND TF-IDF VECTORISING NOTES #-#-#
-    '''
-    '''
     def tfidf_vectorisation(self, train_balanced, test, max_features, ngram_range):
 
         # Defining TF-IDF vectorizer 

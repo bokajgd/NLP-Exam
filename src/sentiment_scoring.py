@@ -97,8 +97,6 @@ class SentimentPrediciton:
         pd.DataFrame(average_sent).to_csv(self.out_dir / f"{data}_sentiment_scores.csv")
 
     #-#-# FUNCTION FOR SPLITTING TEXT #-#-#
-    '''
-    '''
     def split_text(self, text):
         
         # Defining empty lists

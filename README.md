@@ -117,9 +117,12 @@ Readmission prediction can now be performed using the following command:
 python3 src/readmission_prediction.py
 
 ```
-This outputs a .csv file containing predicted labels for the test set and print an evaluation table containing model performance metrics in the terminal. This shows the overall perfromance of the logistic regression classifier for prediction 30-day unplanned readmissions. 
+This outputs a .csv file containing predicted labels for the test set and print an evaluation table containing model performance metrics in the terminal. This shows the overall performance of the logistic regression classifier for prediction 30-day unplanned readmission. 
 <br> 
-Upon obtaining the true performance 
+Now, sentiment scores can be calculated for all notes in the test
+
+A class-balanced subset of the test data - on which sentiment analysis can be performed and statistical models assessed - can be produced by opening the *subset_of_test_data.Rmd* file and running the code (recommend using RStudio). Subsequently, plots can be generated and models performed by opening and running all code in the file *tests_and_plots.Rmd*. 
+<br>
 
 ## Structure
 The structure of the downloaded folder (given data is there) can be viewed using the following command:
@@ -140,19 +143,14 @@ This should yield the following graph:
 │   └── PATIENTS.csv
 ├── output
 │   ├── balanced_test_data.csv
-│   ├── balanced_test_data_sentiment_scores.csv
-│   ├── balanced_test_labels.csv
-│   ├── balanced_tfidf_test_notes.csv
-│   ├── lr_predictions_balanced.csv
 │   ├── lr_predictions_test_data.csv
 │   ├── test_data.csv
+│   ├── test_data.csv_sentiment_scores.csv
 │   ├── test_labels.csv
 │   ├── tfidf_test_notes.csv
-│  ├── tfidf_train_notes.csv
-│   ├── tfidf_valid_notes.csv
+│   ├── tfidf_train_notes.csv
 │   ├── train_data.csv
 │   ├── train_labels.csv
-│   ├── valid_labels.csv
 │   └── vocab
 ├── requirements.txt
 ├── src

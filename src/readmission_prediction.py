@@ -93,9 +93,7 @@ class ReadmissionPrediction:
         pd.DataFrame(predictions).to_csv(self.out_dir / "lr_predictions.csv")
 
 
-    #-#-# FUNCTION LOGISTIC REGRESSION #-#-#
-    '''
-    '''
+    #-#-# FUNCTION FOR LOGISTIC REGRESSION #-#-#
     def logistic_regression(self):
 
         # Fitting and training the model

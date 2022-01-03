@@ -7,17 +7,65 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+install.packages('pacman')
+pacman::p_load(tidyverse dplyr)
 ```
 
 # This purpose of this script is to generate and export a subset of the test_data frame that is class-balanced and suitable for sentiment analysis
-```{r}
-# Generating subset of test_data.csv for use in sentiment prediction and subsequent tests
+
+## Loading data
+```{r loading data}
 # Loading  test data frame
 test_data <- read_csv("~/Desktop/Cognitive_Science/Cognitive Sceince 7th Semester/NLP/Exam/Exam/output/test_data.csv")
 
+# Loading prediction labels
+pred_labels <- read_csv("~/Desktop/Cognitive_Science/Cognitive Sceince 7th Semester/NLP/Exam/Exam/output/lr_predictions_test_data")
+
+# Loading true labels
+true_labels <- read_csv("~/Desktop/Cognitive_Science/Cognitive Sceince 7th Semester/NLP/Exam/Exam/output/test_labels.csv")
+
+# Loading sentiment scores
+sent_scores <- read_csv("~/Desktop/Cognitive_Science/Cognitive Sceince 7th Semester/NLP/Exam/Exam/output/test_data.csv_sentiment_scores.csv")
+```
+
+
+## Merging columns on to df
+```{r merging data}
+# Merging data
+test_data$true_labels = true_labels$OUTPUT_LABEL
+test_data$pred_labels = pred_labels[[2]]
+test_data$sent_scores = sent_scores[[2]]
+
+
+# Adding column showing prediction categories
+# Create empty column
+test_data[ , 'res'] <- NA
+
+# Find prediction result
+for(i in seq_len(nrow(test_data))){
+  if (test_data$true_labels[i] == 0 & test_data$pred_labels[i] == 0) {
+    test_data$res[i] = 'TN'
+  }
+  if (test_data$true_labels[i] == 1 & test_data$pred_labels[i] == 1) {
+    test_data$res[i] = 'TP'
+  }
+  if (test_data$true_labels[i] > test_data$pred_labels[i]) {
+    test_data$res[i] = 'FN'
+  }
+  if (test_data$true_labels[i] < test_data$pred_labels[i]) {
+    test_data$res[i] = 'FP'
+  }
+}
+```
+
+
+```{r}
+
+# Generating subset of test_data.csv for use in sentiment prediction and subsequent tests
+
 # Creating balanced data set containing all positive cases
-pos_cases <- new_test_data[new_test_data$OUTPUT_LABEL=='1',]
-neg_cases <- new_test_data[new_test_data$OUTPUT_LABEL=='0',]
+pos_cases <- test_data[test_data$OUTPUT_LABEL=='1',]
+neg_cases <- test_data[test_data$OUTPUT_LABEL=='0',]
 
 balanced_test_data <- rbind(pos_cases,neg_cases[1:589,])
 
