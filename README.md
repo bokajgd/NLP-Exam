@@ -70,7 +70,7 @@ optional arguments:
 ```
 <br>
 By letting the script use the default inputs, it can be executed like this:
-
+<br>
 ```bash
 
 python3 src/data_preprocessing.py
@@ -116,9 +116,10 @@ Readmission prediction can now be performed using the following command:
 python3 src/readmission_prediction.py
 
 ```
-This outputs a .csv file containing predicted labels for the test set and print an evaluation table containing model performance metrics in the terminal. This shows the overall performance of the logistic regression classifier for prediction 30-day unplanned readmission. 
+This outputs a .csv file containing predicted labels for the test set and prints an evaluation table containing model performance metrics in the terminal. This shows the overall performance of the logistic regression classifier for prediction 30-day unplanned readmission. 
 <br> 
-Now, sentiment scores can be calculated for all notes in the test data by running the *sentiment_analysis.py* file. To examine which arguments the script takes, run
+<br>
+Now, sentiment scores can be calculated for all notes in the test data by running the *sentiment_analysis.py* file. To examine which arguments the script takes, run follwing:
 
 ```bash
 # Add -h to view how which arguments should be passed  
@@ -147,6 +148,7 @@ optional arguments:
 <br> 
 Sentiment scores are calculated using the *nlptown/bert-base-multilingual-uncased-sentiment* model avalable for Hugging Face: https://huggingface.co/nlptown/bert-base-multilingual-uncased-sentiment 
 <br> 
+<br>
 The script can now be performed using the following command:
 
 ```bash
@@ -155,7 +157,7 @@ python3 src/sentiment_analsysis.py
 
 ```
 <br>
-A class-balanced subset of the test data - on which sentiment analysis can be performed and statistical models assessed - can be produced by opening the *subset_of_test_data.Rmd* file and running the code (recommend using RStudio). Subsequently, plots can be generated and models performed by opening and running all code in the file *tests_and_plots.Rmd*. 
+A class-balanced subset of the test data - on which sentiment analysis can be performed and statistical models assessed - can be produced by opening the subset_of_test_data.Rmd file and running the code (recommend using RStudio). Subsequently, plots can be generated and models performed by opening and running all code in the file tests_and_plots.Rmd. 
 <br>
 
 ## Structure
@@ -209,7 +211,7 @@ The following table explains the directory structure in more detail:
 |--------|:-----------|
 ```data```| A folder containing the raw data that can be passed as input arguments to the preprocessing script: <br> •	ADMISSIONS.csv: This file contains all information and metadata on admissions <br> •	NOTEEVENTS.csv: This file contains all clinical notes written during all admissions  <br> • PATIENTS.csv: This file contains demographic data on the patients <br>
 ```src``` | A folder containing the source code sused for the project. 
-```output``` | An output folder in which the script-generated .csv files in the form of data frames, vectorised notes, prediction labels, true labels, and sentiment scores are stored <br> •	*vocab*: This subfolder holds the vocabulary*vocabulary.pkl* after TF-IDF vectorisation
+```output``` | An output folder in which the script-generated .csv files in the form of data frames, vectorised notes, prediction labels, true labels, and sentiment scores are stored. Also contains following subfolder: <br> •	*vocab*: This subfolder holds the vocabulary*vocabulary.pkl* after TF-IDF vectorisation
 ```viz``` | An output folder for the generated visualisations and other visualisations related to the proejct
 
 <br>
