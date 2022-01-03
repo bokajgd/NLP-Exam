@@ -155,7 +155,24 @@ The following table explains the directory structure in more detail:
 Minor disclaimer: A few code chunks in the data_preprocessing.py and readmission_prediction.py have been transferred and modified from scripts used for my bachelor’s project on Learning Latent Feature Representations of Clinical Notes for use in Predictive Models. In general, however, all scripts have been modified and are coded specifically for this exam.
 <br>
 
+# Contact
+**Jakob Grøhn Damgaard** 
+<br />
+[bokajgd@gmail.com](mailto:bokajgd@gmail.com?subject=[GitHub]%20stedsans)
 
+
+[<img align="left" alt="Jakob Grøhn Damgaard | Twitter" width="30px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/twitter.svg" />][twitter2]
+[<img align="left" alt="Jakob Grøhn Damgaard | LinkedIn" width="30px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/linkedin.svg" />][linkedin2]
+
+<br />
+
+</details>
+
+[twitter2]: https://twitter.com/JakobGroehn
+[linkedin2]: https://www.linkedin.com/in/jakob-gr%C3%B8hn-damgaard-04ba51144/
+
+
+ <br>
  
 # License
 Shield: [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
