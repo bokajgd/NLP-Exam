@@ -77,7 +77,7 @@ python3 src/data_preprocessing.py
 
 ```
 
-This script pre.processes the data and outputs both full data frames for the training and test partion and  TF_IDF vectorised training and test data along with classification labels (vector of 0 or 1s) and the vocabulary obtained when fitting the vectorised.  <br>
+This script pre-processes the data and outputs both full data frames for the training and test partition, TF-IDF vectorised training and test notes, appertaining classification labels (vector of 0 or 1s) and the vocabulary obtained when fitting the notes.  <br>
 <br>
 This the latter of the output files from the previous script allows one to run the *readmission_prediction.py* which trains and tests a logistic regression classifier. First, let us examine which arguments the script takes: 
 
