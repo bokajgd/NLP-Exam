@@ -119,8 +119,41 @@ python3 src/readmission_prediction.py
 ```
 This outputs a .csv file containing predicted labels for the test set and print an evaluation table containing model performance metrics in the terminal. This shows the overall performance of the logistic regression classifier for prediction 30-day unplanned readmission. 
 <br> 
-Now, sentiment scores can be calculated for all notes in the test
+Now, sentiment scores can be calculated for all notes in the test data by running the *sentiment_analysis.py* file. Toexamine which arguments the script takes, run
 
+```bash
+# Add -h to view how which arguments should be passed  
+python3 src/sentiment_Analysis.py -h
+usage: sentiment_scoring.py [-h] [-d --data] [-cs --chunk_size]
+                            [-ol --overlap]
+
+[INFO] Sentiment Prediction
+
+optional arguments:
+  -h, --help        show this help message and exit
+  -d --data         [DESCRIPTION] File containig data. Must have column named 'TEXT'. 
+                    [TYPE]        str 
+                    [DEFAULT]     balanced_test_data.csv 
+                    [EXAMPLE]     -d balanced_test_data.csv 
+  -cs --chunk_size  [DESCRIPTION] Size of chunks in which to partition the text (max 60) 
+                    [TYPE]        int 
+                    [MAX VALUE]   60
+                    [DEFAULT]     60 
+                    [EXAMPLE]     -cs 60 
+  -ol --overlap     [DESCRIPTION] Number of words that overlap between chunk 
+                    [TYPE]        int
+                    [DEFAULT]     15 
+                    [EXAMPLE]     -ol 15 
+```
+
+Sentiment analysis can now be performed using the following command:
+
+```bash
+
+python3 src/sentiment_analsysis.py
+
+```
+<br>
 A class-balanced subset of the test data - on which sentiment analysis can be performed and statistical models assessed - can be produced by opening the *subset_of_test_data.Rmd* file and running the code (recommend using RStudio). Subsequently, plots can be generated and models performed by opening and running all code in the file *tests_and_plots.Rmd*. 
 <br>
 
@@ -173,11 +206,13 @@ The following table explains the directory structure in more detail:
 
 | Column | Description|
 |--------|:-----------|
-```data```| A folder containing the raw data that can be passed as input arguments to the preprocessing script: <br> •	ADMISSIONS.csv: This file contains all information and metadata on admissions <br> •	NOTEEVENTS.csv: This file contains all clinical notes written during all admissions <br>
-```src``` | A folder containing the source code (*readmission_prediction.p*y and *data_preprocessing.py*) created to solve the assignment. 
-```output``` | An output folder in which the generated data frames containing vectorised notes, labels and the vocabulary used for matching influential features with their tokens <br> •	*.csv* files: Vectorised notes and labels for test, train and validation splits <br> •	*vocab*: This subfolder holds the vocabulary *vocabulary.pkl*
-```viz``` | An output folder for the generated visualisations and other visualisations for the README.md file <br> •	*ROC-AUC.png*: Image of AUC-ROC curve <br> •	*most_important.png*: Image showing the most influential features and the weigths <br> •	*preprocessing.png*: Flowchart of the preprocessing pipeline
+```data```| A folder containing the raw data that can be passed as input arguments to the preprocessing script: <br> •	ADMISSIONS.csv: This file contains all information and metadata on admissions <br> •	NOTEEVENTS.csv: This file contains all clinical notes written during all admissions  <br> • PATIENTS.csv: This file contains demographic data on the patients <br>
+```src``` | A folder containing the source code sused for the project. 
+```output``` | An output folder in which the script-generated .csv files in the form of data frames, vectorised notes, prediction labels, true labels, and sentiment scores are stored <br> •	*vocab*: This subfolder holds the vocabulary*vocabulary.pkl* after TF-IDF vectorisation
+```viz``` | An output folder for the generated visualisations and other visualisations related to the proejct
+
 <br>
+
 Minor disclaimer: A few code chunks in the data_preprocessing.py and readmission_prediction.py have been transferred and modified from scripts used for my bachelor’s project on Learning Latent Feature Representations of Clinical Notes for use in Predictive Models. In general, however, all scripts have been modified and are coded specifically for this exam.
 <br>
 

@@ -214,9 +214,9 @@ if __name__ == '__main__':
                         metavar="--chunk_size",
                         type=int,
                         help=
-                        "[DESCRIPTION] Size of chunks in which to partition the text (max 250) \n"
+                        "[DESCRIPTION] Size of chunks in which to partition the text (max 60) \n"
                         "[TYPE]        int \n"
-                        "[MAX VALUE]   60"
+                        "[MAX VALUE]   60 \n"
                         "[DEFAULT]     60 \n"
                         "[EXAMPLE]     -cs 60 \n",
                         default=60,
